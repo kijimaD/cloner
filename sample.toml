@@ -1,0 +1,5 @@
+[config]
+host = "github"
+dest_dir = "~/Project"
+# repos = ["kijimaD/digger_rs"]
+repo = "kijimaD/digger_rs"
