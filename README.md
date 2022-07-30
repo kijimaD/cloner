@@ -2,7 +2,7 @@ Literate git clone.
 
 ## Usage
 
-↓ make project.toml (example file name)
+↓ make project.toml (file name is example)
 ```toml
 [config]
 host = "github"
@@ -13,10 +13,12 @@ repos = [
         ]
 ```
 
+run
 ```sh
 $ cloner ./project.toml
 ```
 
+result
 ```
 home
  └── user                                                  ```
@@ -24,3 +26,10 @@ home
           └── emacs
           └── rust
 ```
+
+## TODO
+
+- hosting service options
+- `dest_dir` accept relative path
+- clone way options(ssh or https)
+- multiple groups
