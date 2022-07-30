@@ -4,6 +4,9 @@ extern crate toml;
 
 use std::fs;
 use std::io::{BufReader, Read};
+use std::process::Command;
+use std::env;
+use std::path::Path;
 
 use clap::Parser;
 
@@ -21,8 +24,8 @@ struct Config {
 #[derive(Debug, Deserialize)]
 struct Cloner {
     host: String,
-    dest_dir: std::path::PathBuf,
-    repo: String,
+    dest_dir: String,
+    repos: Vec<String>,
 }
 
 fn read_file(path: std::path::PathBuf) -> Result<String, String> {
@@ -38,18 +41,29 @@ fn read_file(path: std::path::PathBuf) -> Result<String, String> {
     Ok(file_content)
 }
 
+fn clone_cmd(config: Config) {
+    std::env::set_current_dir(&config.config.dest_dir).unwrap();
+
+    for repo in &config.config.repos {
+        println!("{:#?}", &format!("git@github.com:{}.git", repo));
+
+        let arg = &["clone", &format!("git@github.com:{}.git", repo)];
+        let output = Command::new("git").args(arg).output().expect("failed");
+        println!("{}", String::from_utf8_lossy(&output.stdout));
+    }
+}
+
 fn main() {
     let args = Cli::parse();
-    // let content = std::fs::read_to_string(&args.path).expect("could not read file");
 
-    let s = match read_file(args.path.to_owned()) {
+    let str = match read_file(args.path.to_owned()) {
         Ok(s) => s,
         Err(e) => panic!("fail to read file: {}", e),
     };
 
-    let config: Result<Config, toml::de::Error> = toml::from_str(&s);
+    let config: Result<Config, toml::de::Error> = toml::from_str(&str);
     match config {
-        Ok(p) => println!("{:#?}", p),
+        Ok(p) => clone_cmd(p),
         Err(e) => panic!("fail to parse toml: {}", e),
     };
 }
