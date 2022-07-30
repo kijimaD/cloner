@@ -2,31 +2,6 @@
 host = "github"
 dest_dir = "/home/green/Project/test" # WARN: need absolute path!
 repos = [
-  # Emacs
-  "kd-collective/corfu",
-  "kd-collective/crux",
-  "kd-collective/emacs",
-  "kd-collective/forge",
-  "kd-collective/melpa",
-  "kd-collective/org-roam",
-  "kd-collective/projectile",
-  "kd-collective/vterm-toggle",
-
-  # Rust
-  "kd-collective/rust",
-  "kd-collective/specs",
-
-  # C++
-  "kd-collective/simutrans",
-
-  # Ruby
-  "kd-collective/doctree",
-
-  # Ruby on Rails
-  "kd-collective/forem",
-  "kd-collective/gitlabhq",
-  "kd-collective/mastodon",
-
-  # Go
-  "kd-collective/compose",
+    "emacs-mirror/emacs",
+    "rust-lang/rust"
 ]

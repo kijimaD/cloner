@@ -1,9 +1,26 @@
-$ cloner install ./project.toml
-$ cloner install ./project_org.toml
+Literate git clone.
 
+## Usage
 
-project.toml --
+↓ make project.toml (example file name)
+```toml
+[config]
+host = "github"
+dest_dir = "/home/user/Project" # WARN: need absolute path!
+repos = [
+          "emacs-mirror/emacs",
+          "rust-lang/rust"
+        ]
 ```
-base_dir = ./Project
-repository = [ "kijimaD/digger_rs" ]
+
+```sh
+$ cloner ./project.toml
+```
+
+```
+home
+ └── user                                                  ```
+      └── Project
+          └── emacs
+          └── rust
 ```
