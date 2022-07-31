@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["clone_cmd",""],["main",""],["read_file",""]],"struct":[["Cli",""],["Cloner",""],["Config",""]]});
+initSidebarItems({"fn":[["clone_cmd",""],["main",""],["read_file",""],["report_config",""]],"struct":[["Cli",""],["Cloner",""],["Config",""]]});
