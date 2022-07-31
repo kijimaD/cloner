@@ -1,0 +1,27 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Build Docs
+        run: |
+          cargo doc --no-deps
+
+      - name: Check
+        run: |
+          ls -al ./target/doc
+
+      - name: Publish generated content to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: target/doc
