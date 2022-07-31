@@ -52,14 +52,15 @@ fn clone_cmd(config: Config) {
     report_config(config.clone());
 
     for repo in &config.repos {
+        print!("{}", &format!("{}", repo));
+
         let arg = &["clone", &format!("git@github.com:{}.git", repo)];
         Command::new("git")
             .current_dir(&cwd)
             .args(arg)
             .output()
             .expect("failed");
-
-        println!("{}", &format!("✔ {}", repo));
+        println!(" ✔");
     }
 }
 
