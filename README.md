@@ -6,7 +6,7 @@ Literate git clone.
 ```toml
 [config]
 host = "github"
-dest_dir = "/home/user/Project" # WARN: need absolute path!
+dest_dir = "~/Project"
 repos = [
           "emacs-mirror/emacs",
           "rust-lang/rust"
@@ -20,11 +20,10 @@ $ cloner ./project.toml
 
 result
 ```
-home
- └── user                                                  ```
-      └── Project
-          └── emacs
-          └── rust
+~                                                  ```
+ └─ Project
+     └─ emacs
+     └─ rust
 ```
 
 ## TODO

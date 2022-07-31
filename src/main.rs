@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate toml;
+extern crate shellexpand;
 
 use std::fs;
 use std::io::{BufReader, Read};
@@ -8,11 +9,15 @@ use std::process::Command;
 
 use clap::Parser;
 
+// CLI ================
+
 #[derive(Parser)]
 struct Cli {
     #[clap(parse(from_os_str))]
     path: std::path::PathBuf,
 }
+
+// toml parse ================
 
 #[derive(Debug, Deserialize)]
 struct Cloner {
@@ -39,8 +44,10 @@ fn read_file(path: std::path::PathBuf) -> Result<String, String> {
     Ok(file_content)
 }
 
+// build process ================
+
 fn clone_cmd(config: Config) {
-    std::env::set_current_dir(&config.dest_dir).unwrap();
+    std::env::set_current_dir(format!("{}", shellexpand::tilde(&config.dest_dir))).unwrap();
 
     println!("────────────────────────────");
     println!("{}", &format!("host: {}", config.host));
@@ -54,6 +61,8 @@ fn clone_cmd(config: Config) {
         let output = Command::new("git").args(arg).output().expect("failed");
     }
 }
+
+// main ================
 
 fn main() {
     let args = Cli::parse();

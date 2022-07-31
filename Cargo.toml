@@ -17,3 +17,4 @@ clap = { version = "^3.0", features = ["derive"] }
 serde = "^1.0"
 serde_derive = "^1.0"
 toml = "^0.4"
+shellexpand = "^2.1"
