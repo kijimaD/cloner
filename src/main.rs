@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate serde_derive;
-extern crate toml;
 extern crate shellexpand;
+extern crate toml;
 
 use std::fs;
 use std::io::{BufReader, Read};
@@ -24,7 +24,7 @@ struct Cloner {
     config: Config,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 struct Config {
     host: String,
     dest_dir: String,
@@ -47,19 +47,27 @@ fn read_file(path: std::path::PathBuf) -> Result<String, String> {
 // build process ================
 
 fn clone_cmd(config: Config) {
-    std::env::set_current_dir(format!("{}", shellexpand::tilde(&config.dest_dir))).unwrap();
+    let cwd = format!("{}", shellexpand::tilde(&config.dest_dir));
 
+    report_config(config.clone());
+
+    for repo in &config.repos {
+        let arg = &["clone", &format!("git@github.com:{}.git", repo)];
+        Command::new("git")
+            .current_dir(&cwd)
+            .args(arg)
+            .output()
+            .expect("failed");
+
+        println!("{}", &format!("✔ {}", repo));
+    }
+}
+
+fn report_config(config: Config) {
     println!("────────────────────────────");
     println!("{}", &format!("host: {}", config.host));
     println!("{}", &format!("destination: {}", config.dest_dir));
     println!("────────────────────────────");
-
-    for repo in &config.repos {
-        println!("{}", &format!("✔ {}", repo));
-
-        let arg = &["clone", &format!("git@github.com:{}.git", repo)];
-        let output = Command::new("git").args(arg).output().expect("failed");
-    }
 }
 
 // main ================
